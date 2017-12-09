@@ -29,15 +29,12 @@ public class DiceCast {
 	static boolean inputCheck(String str) {
 		String[] diceSize = { "3", "4", "6", "8", "10", "12", "20", "100" };
 		String[] strArr = str.split("[D+-]");
-		System.out.println(strArr.length);
-		System.out.println(((strArr.length == 3) && (whatInteger(strArr[2]))== -1));
-
 		if ((str.length() < 2) && (str.length() > 8) && !(str.contains("D"))
 				&& ((str.contains("+")) && str.indexOf('+') > str.indexOf('D') + 1)
 				&& ((str.contains("-")) && str.indexOf('-') > str.indexOf('D') + 1) 
-				&& ((strArr.length == 3) && (whatInteger(strArr[2]))== -1) ) {
+				|| ((strArr.length == 3) && (whatInteger(strArr[2]))== -1)) {
 			System.out.println("Wrong input format.");
-			return false; //TODO
+			return false; 
 		}
 		if (!Arrays.asList(diceSize).contains(strArr[1].trim())) {
 			System.out.println(
