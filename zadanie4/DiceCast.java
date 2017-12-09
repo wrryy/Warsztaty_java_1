@@ -19,29 +19,33 @@ public class DiceCast {
 			data = scan.next();
 			check = inputCheck(data);
 		}
-		int[] dataArray = parseInput(data);
+		int[] dataArray = inputParse(data);
 		scan.close();
 		int num = diceThrow(dataArray);
-		System.out.println("Threw " + num);
+		System.out.println("Result: " + num);
 		return num;
 	}
 
 	static boolean inputCheck(String str) {
-		if ((str.length() < 2) && (str.length() > 8) && !(str.contains("D"))
-				&& ((str.contains("+")) && str.indexOf('+') > str.indexOf('D') + 1)
-				&& ((str.contains("-")) && str.indexOf('-') > str.indexOf('D') + 1)) {
-			System.out.println("Wrong input format.");
-			return false;
-		}
 		String[] diceSize = { "3", "4", "6", "8", "10", "12", "20", "100" };
 		String[] strArr = str.split("[D+-]");
-		if (Arrays.asList(diceSize).contains(strArr[1])) {
-			System.out.println("Error: You might want to check if dice size is correct.");
+		System.out.println(strArr.length);
+		System.out.println(((strArr.length == 3) && (whatInteger(strArr[2]))== -1));
+
+		if ((str.length() < 2) && (str.length() > 8) && !(str.contains("D"))
+				&& ((str.contains("+")) && str.indexOf('+') > str.indexOf('D') + 1)
+				&& ((str.contains("-")) && str.indexOf('-') > str.indexOf('D') + 1) 
+				&& ((strArr.length == 3) && (whatInteger(strArr[2]))== -1) ) {
+			System.out.println("Wrong input format.");
+			return false; //TODO
+		}
+		if (!Arrays.asList(diceSize).contains(strArr[1].trim())) {
+			System.out.println(
+					"Error: You might want to check if dice size is correct.\nChoose from: {3,4,6,8,10,12,20,100}");
 			return false;
 		}
 		return true;
 	}
-	// dataArray = parseData(str);
 
 	/**
 	 * Parses data according to cube cast naming convention. "xDy(+/-)z". y =
@@ -50,7 +54,7 @@ public class DiceCast {
 	 * @param str
 	 * @return int[]
 	 */
-	static int[] parseInput(String str) {
+	static int[] inputParse(String str) {
 		int[] dataArr = { -1, -1, 0, 1 };
 		String[] tempArr = str.split("[D+-]");
 		// determining value of x
@@ -76,8 +80,11 @@ public class DiceCast {
 		Random r = new Random();
 		int result = arr[2] * arr[3];
 		for (int i = 0; i < arr[0]; i++) {
-			result += r.nextInt(arr[1]) + 1;
+			int cast = r.nextInt(arr[1]) + 1;
+			System.out.printf("%d throw: %d\n", i + 1, cast);
+			result += cast;
 		}
+		System.out.println();
 		return result;
 	}
 
