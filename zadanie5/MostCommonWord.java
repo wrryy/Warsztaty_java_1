@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,17 +43,17 @@ public class MostCommonWord implements Comparable<Integer> {
 			for (Element elem : links) {
 				fw.append(elem.text().toString()).append("\n");
 			}
-			TreeMap<String, Integer> words = countWords("popular_words.txt");
-			firstTen(words);
+			Map<String, Integer> words = countWords("popular_words.txt");
+			mostFrequent(words);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	static TreeMap<String, Integer> countWords(String fileName) throws FileNotFoundException {
+	static Map<String, Integer> countWords(String fileName) throws FileNotFoundException {
 		Scanner scan = new Scanner(new File(fileName));
-		TreeMap<String, Integer> wordCounter = new TreeMap<>();
+		Map<String, Integer> wordCounter = new TreeMap<>();
 
 		while (scan.hasNextLine()) {
 			String[] line = scan.nextLine().split("[-.,\\s:\"!\\/?]");
@@ -71,26 +72,30 @@ public class MostCommonWord implements Comparable<Integer> {
 		return wordCounter;
 	}
 
-	static void firstTen(TreeMap<String, Integer> map) throws IOException {
+	static void mostFrequent(Map<String, Integer> map) throws IOException {
 		FileWriter fw = new FileWriter("most_popular_words.txt");
-		// Stream<HashMap.Entry<String, Integer>> sorted =
-		// map.entrySet().stream()
+		// Stream<HashMap.Entry<String, Integer>> sorted = map.entrySet().stream()
 		// .sorted(Collections.reverseOrder(HashMap.Entry.comparingByValue()));
-		int counter = 0;
+		int index = 0;
+		String[] arr = new String[map.size()];
 		for (Map.Entry<String, Integer> mapData : map.entrySet()) {
-			if (counter < 10) {
-				System.out.println("Key : " + mapData.getKey() + " Value : " + mapData.getValue());
-				counter++;
-			}
+			String entry = mapData.getValue() + "" + " " + mapData.getKey();
+			arr[index] = entry;
+			index++;
 		}
-		// while (counter < 1) {
-		// for (int i = 0; i<9; i++){
-		// System.out.println(l[i]);
-		// fw.append((sorted.toArray())[i].toString());
-		// }
-		// counter++;
-		// }
+		Arrays.sort(arr);
+		for (int i = 0; i < 10; i++) {
+			fw.append(arr[arr.length-1-i]).append("\n");
+		}
+		fw.close();
 	}
+	// while (counter < 1) {
+	// for (int i = 0; i<9; i++){
+	// System.out.println(l[i]);
+	// fw.append((sorted.toArray())[i].toString());
+	// }
+	// counter++;
+	// }
 	// fw.append((l[i]).toString());
 	// fw.append(l.get(i).toString());
 	// fw.append(().get(i).toString());
