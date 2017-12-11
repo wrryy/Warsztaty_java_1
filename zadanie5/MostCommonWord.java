@@ -22,7 +22,7 @@ import org.jsoup.select.Elements;
 public class MostCommonWord implements Comparable<Integer> {
 
 	public static void main(String[] args) {
-		// mostCommonWords();
+		mostCommonWords();
 		mostCommonWords("http://www.onet.pl/");
 	}
 
@@ -85,20 +85,10 @@ public class MostCommonWord implements Comparable<Integer> {
 		}
 		Arrays.sort(arr);
 		for (int i = 0; i < 10; i++) {
-			fw.append(arr[arr.length-1-i]).append("\n");
+			fw.append(arr[arr.length - 1 - i]).append("\n");
 		}
 		fw.close();
 	}
-	// while (counter < 1) {
-	// for (int i = 0; i<9; i++){
-	// System.out.println(l[i]);
-	// fw.append((sorted.toArray())[i].toString());
-	// }
-	// counter++;
-	// }
-	// fw.append((l[i]).toString());
-	// fw.append(l.get(i).toString());
-	// fw.append(().get(i).toString());
 
 	@Override
 	public int compareTo(Integer o) {
